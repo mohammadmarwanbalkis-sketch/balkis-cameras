@@ -1,0 +1,5 @@
+# Untouched source photos / video / logo PDF — 46 MB, not part of the website
+_originals/
+
+.DS_Store
+node_modules/
