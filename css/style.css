@@ -189,6 +189,9 @@ body.pointer-fine .cursor{opacity:1}
 .orb-a{width:min(46vw,560px);aspect-ratio:1;right:-6%;top:-10%;background:radial-gradient(circle,rgba(241,108,0,.4),transparent 66%)}
 .orb-b{width:min(40vw,480px);aspect-ratio:1;left:-12%;bottom:-16%;background:radial-gradient(circle,rgba(0,92,154,.4),transparent 66%)}
 
+.hero-watermark{position:absolute;left:50%;top:50%;translate:-50% -50%;width:min(90vw,900px);height:auto;
+  opacity:.12;animation:wmFloat 9s ease-in-out infinite}
+@keyframes wmFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,4vw,64px);
   align-items:center}
 .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border-radius:100px;
@@ -570,6 +573,7 @@ body.pointer-fine .cursor{opacity:1}
   .hero-title{font-size:clamp(2.3rem,11vw,3.1rem)}
   .hero-sub{font-size:.98rem;margin-top:15px}
   .hero-actions{margin-top:22px;gap:9px}
+  .hero-watermark{width:130vw;top:34%}
   .hero-actions{grid-template-columns:1fr 1fr;max-width:none}
   .hero-actions .btn:first-child{grid-column:1 / -1}
   .hero-survey{font-size:14px}
