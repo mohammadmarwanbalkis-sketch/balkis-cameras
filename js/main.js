@@ -13,7 +13,7 @@
   const FINE    = matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (FINE) document.body.classList.add('pointer-fine');
 
-  const WA_NUMBER = '17542710952';
+  const WA_NUMBER = '17542710952';   // also the call / SMS number
 
   /* ── 1. PRELOADER ───────────────────────── */
   (function preloader() {
@@ -270,7 +270,7 @@
     const yr = $('#yr'); if (yr) yr.textContent = new Date().getFullYear();
   })();
 
-  /* ── 13. QUOTE FORM → WhatsApp ──────────── */
+  /* ── 13. QUOTE FORM → text message (or WhatsApp) ── */
   (function form() {
     const f = $('#quoteForm'); if (!f) return;
     const ok = $('#formOk');
@@ -286,10 +286,11 @@
       });
       if (!valid) { f.elements.name.focus(); return; }
 
+      const via = (e.submitter && e.submitter.value) || 'sms';
       const d = new FormData(f);
       if (f.dataset.endpoint) {
         try { await fetch(f.dataset.endpoint, { method: 'POST', body: d, headers: { Accept: 'application/json' } }); }
-        catch (_) { /* non-fatal — the WhatsApp handoff below still runs */ }
+        catch (_) { /* non-fatal — the message handoff below still runs */ }
       }
       const msg = [
         'Free survey request — Balkis Cameras', '',
@@ -300,7 +301,13 @@
         'Cameras needed: ' + d.get('cameras'),
         'Notes: ' + (d.get('notes') || '—')
       ].join('\n');
-      window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+
+      if (via === 'wa') {
+        window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank', 'noopener');
+      } else {
+        // "?&body=" is the form both iOS and Android Messages accept
+        location.href = 'sms:+' + WA_NUMBER + '?&body=' + encodeURIComponent(msg);
+      }
       ok.hidden = false;
       ok.scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
     });
